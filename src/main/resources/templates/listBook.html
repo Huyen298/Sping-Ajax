@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Book</title>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        function addNew() {
+            let name = $('#name').val();
+            let price = $('#price').val();
+            let author = $('#author').val();
+            let category = $('#category').val();
+            let newBook = {
+                name : name,
+                price : price,
+                author : author,
+                category : {
+                    id: category
+                },
+            };
+            $.ajax({
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                type: "POST",
+                data: JSON.stringify(newBook),
+                url: "/user",
+                success: showListBook
+            });
+            event.preventDefault();
+
+        }
+        function showListBook(){
+            $.ajax({
+                type: "GET",
+                url: "/user",
+                success: function (book){
+                    let content = '<tr>\n' +
+                        '            <th>ID</th>\n' +
+                        '            <th>Author</th>\n' +
+                        '            <th>Name</th>\n' +
+                        '            <th>Price</th>\n' +
+                        '            <th>Category</th>\n' +
+                        '            <th>Action</th>\n' +
+                        '        </tr>';
+                    for (let i = 0; i < book.length; i++) {
+                        content+=`<tr>
+                <td >${book[i].id}</td>
+                <td >${book[i].author}</td>
+                <td >${book[i].name}</td>
+                <td >${book[i].price}</td>
+                <td >${book[i].category.name}</td>
+
+                // <td><a class="edit" href="${book.id}">Edit</a></td>
+                // <td><a onclick="deleteBook(this)" class="delete" href="${book[i].id}">Delete</a></td>
+
+            </tr>`
+                    }
+                    document.getElementById("list").innerHTML = content;
+                }
+            })
+        }
+    </script>
+</head>
+<body>
+<form id="add-book" >
+    <table>
+        <tr>
+            <td>Author:</td>
+            <td><input type="text" id="author" placeholder="author"></td>
+        </tr>
+        <tr>
+            <td>Name:</td>
+            <td><input type="text" id="name" placeholder="name"></td>
+        </tr>
+        <tr>
+            <td>Price:</td>
+            <td><input type="text" id="price" placeholder="price"></td>
+        </tr>
+        <tr>
+            <td>Category:</td>
+            <td >
+                <select name="category" id="category">
+                    <option th:each="c: ${categories}" th:value="${c.id}" th:text="${c.name}"></option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" value="Add" onclick="addNew()"></td>
+        </tr>
+    </table>
+</form>
+<table border="1" id="list">
+    <tr>
+        <th>ID</th>
+        <th>Author</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Category</th>
+        <th>Action</th>
+    </tr>
+    <th:block th:each="books : ${book}">
+        <tr>
+            <td th:text="${books.id}"></td>
+            <td th:text="${books.author}"></td>
+            <td th:text="${books.name}"></td>
+            <td th:text="${books.price}"></td>
+            <td th:text="${books.category.name}"></td>
+
+<!--            <td><a th:href="${books.getId()}">Edit</a></td>-->
+<!--            <td><a onclick="deleteBook(this)" class="delete" th:href="${books.getId()}">Delete</a></td>-->
+
+        </tr>
+    </th:block>
+</table>
+</body>
+</html>
