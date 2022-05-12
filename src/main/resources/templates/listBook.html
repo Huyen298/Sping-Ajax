@@ -52,8 +52,6 @@
                 <td >${book[i].price}</td>
                 <td >${book[i].category.name}</td>
 
-                // <td><a class="edit" href="${book.id}">Edit</a></td>
-                // <td><a onclick="deleteBook(this)" class="delete" href="${book[i].id}">Delete</a></td>
 
             </tr>`
                     }
@@ -61,6 +59,7 @@
                 }
             })
         }
+
     </script>
 </head>
 <body>
@@ -109,8 +108,6 @@
             <td th:text="${books.price}"></td>
             <td th:text="${books.category.name}"></td>
 
-<!--            <td><a th:href="${books.getId()}">Edit</a></td>-->
-<!--            <td><a onclick="deleteBook(this)" class="delete" th:href="${books.getId()}">Delete</a></td>-->
 
         </tr>
     </th:block>

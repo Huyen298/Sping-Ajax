@@ -12,31 +12,56 @@ public class Book {
     private String name;
     private Long price;
     private String author;
+    private String image;
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
     public Book() {
     }
 
-    public Book(String name, Long price, String author) {
-        this.name = name;
-        this.price = price;
-        this.author = author;
-    }
-
-    public Book(Long id, String name, Long price, String author) {
+    public Book(Long id, String name, Long price, String author, String image, Category category) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.author = author;
+        this.image = image;
+        this.category = category;
     }
 
-    public Book(String name, Long price, String author, Category category) {
+    public Book(String name, Long price, String author, String image, Category category) {
         this.name = name;
         this.price = price;
         this.author = author;
+        this.image = image;
         this.category = category;
     }
+//    public Book(Long id, String name, Long price, String author, Category category) {
+//        this.id = id;
+//        this.name = name;
+//        this.price = price;
+//        this.author = author;
+//        this.category = category;
+//    }
+//
+//    public Book(String name, Long price, String author) {
+//        this.name = name;
+//        this.price = price;
+//        this.author = author;
+//    }
+//
+//    public Book(Long id, String name, Long price, String author) {
+//        this.id = id;
+//        this.name = name;
+//        this.price = price;
+//        this.author = author;
+//    }
+//
+//    public Book(String name, Long price, String author, Category category) {
+//        this.name = name;
+//        this.price = price;
+//        this.author = author;
+//        this.category = category;
+//    }
 
     public Long getId() {
         return id;
@@ -76,5 +101,13 @@ public class Book {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }
